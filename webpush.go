@@ -188,7 +188,7 @@ func SendNotification(message []byte, s *Subscription, options *Options) (*http.
 		req.Header.Set("Topic", options.Topic)
 	}
 
-	if isValidUrgency(options.Urgency) {
+	if IsValidUrgency(options.Urgency) {
 		req.Header.Set("Urgency", string(options.Urgency))
 	}
 
