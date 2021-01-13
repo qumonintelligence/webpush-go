@@ -11,6 +11,7 @@ import (
 	"encoding/binary"
 	"errors"
 	"io"
+	"log"
 	"net/http"
 	"strconv"
 	"strings"
@@ -246,7 +247,14 @@ func getHKDFKey(hkdf io.Reader, length int) ([]byte, error) {
 func pad(payload *bytes.Buffer, maxPadLen int) {
 	payloadLen := payload.Len()
 	padLen := maxPadLen - payloadLen
-
+	log.Printf("maxPadLen: %s, payloadLen: %s, padLen: %s", maxPadLen, payloadLen, padLen)
+	if padLen <= 0 {
+		log.Print("pad <= 0")
+		return
+	}
+	if padLen > 4096 {
+		panic("padLen > 4096")
+	}
 	padding := make([]byte, padLen)
 	payload.Write(padding)
 }
