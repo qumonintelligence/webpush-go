@@ -247,12 +247,13 @@ func getHKDFKey(hkdf io.Reader, length int) ([]byte, error) {
 func pad(payload *bytes.Buffer, maxPadLen int) {
 	payloadLen := payload.Len()
 	padLen := maxPadLen - payloadLen
-	log.Printf("maxPadLen: %s, payloadLen: %s, padLen: %s", maxPadLen, payloadLen, padLen)
 	if padLen <= 0 {
-		log.Print("pad <= 0")
+		log.Printf("maxPadLen: %v, payloadLen: %v, padLen: %v", maxPadLen, payloadLen, padLen)
+		log.Print("padLen <= 0")
 		return
 	}
 	if padLen > 4096 {
+		log.Printf("maxPadLen: %v, payloadLen: %v, padLen: %v", maxPadLen, payloadLen, padLen)
 		panic("padLen > 4096")
 	}
 	padding := make([]byte, padLen)
